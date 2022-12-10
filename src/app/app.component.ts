@@ -26,7 +26,6 @@ export class AppComponent {
   //variable for hero exist or not sucess meessage
   heroExist:string="";
   constructor(private httpClient : HttpClient,private router: Router,private route: ActivatedRoute,){
-    console.log(route)
     var id = this.route.snapshot.paramMap.get("id");
     console.log(id);
 

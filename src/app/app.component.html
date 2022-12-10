@@ -23,7 +23,7 @@
     <div class="row" >
         <ng-container *ngFor="let hero of heroData | paginate: { id: 'listing_pagination', itemsPerPage: 12, currentPage: page, totalItems: totalRecords }">
             <div class=" ml-lg-2 ml-md-2 mb-5" style=" width:300px;" (click) ="showHeroInformation(hero)">
-                <div class="card mt-2 mx-0 mb-4 mr-lg-4 mr-md-4 px-2">
+                <div class="card mt-2 mx-0 mb-4 mr-lg-4 mr-md-4 px-2" data-toggle="tooltip" data-placement="right" title="{{hero.biography.fullName}}">
                     <h4 class="text-left font-weight-bold pt-3" data-toggle="tooltip" data-placement="right" title="{{hero.biography.fullName}}"  *ngIf="hero.biography.fullName !== ''">{{hero.biography.fullName.slice(0,15)}}<small *ngIf="hero.biography.fullName.length>15">....</small></h4><h4 class="text-left font-weight-bold pt-3"  *ngIf="hero.biography.fullName == ''">&nbsp;</h4>
                     <div class="imgWidth" *ngIf="hero.images !=null"> <img class="card-img-top w-100 h-100" src="{{hero.images.lg}}" alt="Card image cap"> </div>
                     <P class="text-left" >{{hero.biography.placeOfBirth}}</P>

@@ -1,4 +1,5 @@
 
+/* css for setting card height */
   .card{
     height: 90%;
     min-height: 320px;
@@ -25,6 +26,7 @@
     min-height: 100%;
 }
 
+/* css for mobile mode */
 @media screen and (max-width : 767px){
     .row {
         display: flex;
@@ -32,11 +34,13 @@
     }
 }
 
+/* css for photo right in card */
 .view{
     float: right;
     padding-left: 1vw;
 }
 
+/* css for scroll top */
 #scrollbtn {
     position: fixed;
     bottom: 20px;
