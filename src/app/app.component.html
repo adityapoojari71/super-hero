@@ -1,0 +1,206 @@
+<!-- <router-outlet></router-outlet> -->
+<!-- <app-dashboard></app-dashboard> -->
+
+<nav class="navbar navbar-expand-lg navbar-light " style="background-color: #dedfe0;;">
+    <h3 class="font-weight-bold ml-4"> SUPER HEORS</h3>
+</nav>
+<div class="ml-5" *ngIf="heroData.length>0 && homePage == true">
+    <div class="row  mt-3">
+        <div class="col-5">
+            <div class="input-group mb-3">
+                <input type="text" id="search" class="form-control" (keyup)="clearSerachBox()" placeholder="Serach by Name" aria-label="Serach by Name" aria-describedby="basic-addon2">
+                <div class="input-group-append">
+                  <span class="input-group-text" id="basic-addon2" (click)="serachHeros()">Search</span>
+                </div>
+              </div>
+              <div class="row text-center">
+                <div class="col">
+                    <p class="font-weight-bold ">{{heroExist}}</p>
+                </div>
+              </div>
+        </div>
+    </div>
+    <div class="row" >
+        <ng-container *ngFor="let hero of heroData | paginate: { id: 'listing_pagination', itemsPerPage: 12, currentPage: page, totalItems: totalRecords }">
+            <div class=" ml-lg-2 ml-md-2 mb-5" style=" width:300px;" (click) ="showHeroInformation(hero)">
+                <div class="card mt-2 mx-0 mb-4 mr-lg-4 mr-md-4 px-2">
+                    <h4 class="text-left font-weight-bold pt-3" data-toggle="tooltip" data-placement="right" title="{{hero.biography.fullName}}"  *ngIf="hero.biography.fullName !== ''">{{hero.biography.fullName.slice(0,15)}}<small *ngIf="hero.biography.fullName.length>15">....</small></h4><h4 class="text-left font-weight-bold pt-3"  *ngIf="hero.biography.fullName == ''">&nbsp;</h4>
+                    <div class="imgWidth" *ngIf="hero.images !=null"> <img class="card-img-top w-100 h-100" src="{{hero.images.lg}}" alt="Card image cap"> </div>
+                    <P class="text-left" >{{hero.biography.placeOfBirth}}</P>
+                </div>
+            </div>
+        </ng-container>
+    </div>
+
+    <div class="row float-right mr-5" *ngIf="heroData.length > 0">
+        <pagination-controls id="listing_pagination"   (pageChange)="page = $event" (pageBoundsCorrection)="page = $event" ></pagination-controls>
+    </div>
+
+    <button id="scrollbtn"  (click)="gotoTop()"><i class="fa-solid fa-arrow-up"></i></button>
+
+  </div>
+
+
+  <div class="div" *ngIf="homePage == false">
+    <div class="row m-5" >
+        <div class="col card">
+            <div>
+                <div class="view p-3">
+                    <img class="d-block w-100" style="height: 50vh;" src="{{heroDetails.images.lg}}" alt="First slide">
+                    <!-- <div class="mask rgba-black-slight waves-light" mdbWavesEffect></div> -->
+                </div>
+
+                <div class="row pt-2">
+                    <div class="col">
+                        <h4  class="font-weight-bold">Name : {{heroDetails.name}} </h4>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col pt-2">
+                        <h5 class="font-weight-bold">Biography</h5>
+                        <div class="row">
+                            <div class="col">
+                                <p><b>Full Name</b> : {{heroDetails.biography.fullName}}</p>
+                            </div>
+                            <div class="col">
+                                <p><b>Place Of Birth </b>: {{heroDetails.biography.placeOfBirth}}</p>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col">
+                                <p><b>FirstAppearance</b> : {{heroDetails.biography.firstAppearance}}</p>
+                            </div>
+                            <div class="col">
+                                <p><b>AlterEgos </b>: {{heroDetails.biography.alterEgos}}</p>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col">
+                                <p><b>Aliases</b> : </p>
+                                <div  class="mt-n3" *ngFor="let alias of heroDetails.biography.aliases">
+                                    <p class="pb-2">{{alias}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <hr>
+
+                <div class="row">
+                    <div class="col pt-2">
+                        <h5 class="font-weight-bold">Appearance
+                        </h5>
+                        <div class="row">
+                            <div class="col">
+                                <p><b>Eye Color</b> : {{heroDetails.appearance.eyeColor}}</p>
+                            </div>
+                            <div class="col">
+                                <p><b>Gender</b> : {{heroDetails.appearance.gender}}</p>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col">
+                                <p><b>HairColor </b> : {{heroDetails.appearance.hairColor}}</p>
+                            </div>
+                            <div class="col">
+                                <p><b>Race</b> : {{heroDetails.appearance.race}}</p>
+                            </div>
+                        </div>
+
+                        <hr>
+
+                        <div class="row">
+                            <div class="col">
+                                <p><b>Height</b> : </p>
+                                <div  class="mt-n3" *ngFor="let height of heroDetails.appearance.height">
+                                    <p class="pb-2">{{height}}</p>
+                                </div>
+                            </div>
+
+                            <div class="col">
+                                <p><b>Weight</b> : </p>
+                                <div  class="mt-n3" *ngFor="let weight of heroDetails.appearance.weight">
+                                    <p class="pb-1">{{weight}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <hr>
+
+                <div class="row">
+                    <div class="col pt-2">
+                        <h5 class="font-weight-bold">Connections</h5>
+                        <div class="row">
+                            <div class="col">
+                                <p><b>GroupAffiliation</b> : {{heroDetails.connections.groupAffiliation}}</p>
+                            </div>
+                            <div class="col">
+                                <p><b>Relatives</b> : {{heroDetails.connections.relatives}}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <hr>
+
+                <div class="row">
+                    <div class="col pt-2">
+                        <h5 class="font-weight-bold">Powerstats</h5>
+                        <div class="row">
+                            <div class="col">
+                                <p><b>Combat</b> : {{heroDetails.powerstats.combat}}</p>
+                            </div>
+                            <div class="col">
+                                <p><b>Durability</b> : {{heroDetails.powerstats.durability}}</p>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col">
+                                <p><b>Intelligence</b> : {{heroDetails.powerstats.intelligence}}</p>
+                            </div>
+                            <div class="col">
+                                <p><b>Speed</b> : {{heroDetails.powerstats.speed}}</p>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col">
+                                <p><b>Power</b> : {{heroDetails.powerstats.power}}</p>
+                            </div>
+                            <div class="col">
+                                <p><b>Strength</b> : {{heroDetails.powerstats.strength}}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <hr>
+
+                <div class="row">
+                    <div class="col pt-2">
+                        <h5 class="font-weight-bold">Work</h5>
+                        <div class="row">
+                            <div class="col">
+                                <p><b>Base</b> : {{heroDetails.work.base}}</p>
+                            </div>
+                            <div class="col">
+                                <p><b>occupation</b> : {{heroDetails.work.occupation}}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="row float-right m-5 mt-n3">
+        <div class="col">
+            <button type="button" class="btn btn-primary" (click)="backToDetailPage()">back</button>
+        </div>
+    </div>
+    
+  </div>
+  
